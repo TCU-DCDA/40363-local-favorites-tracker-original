@@ -19,41 +19,6 @@ console.log('Favorites list:', favoritesList);
 console.log('Search input:', searchInput);
 console.log('Category filter:', categoryFilter);
 
-
-// Function to save favorites to localStorage
-function saveFavorites() {
-    try {
-        localStorage.setItem('localFavorites', JSON.stringify(favorites));
-        console.log('Favorites saved to localStorage');
-        console.log('Saved', favorites.length, 'favorites');
-    } catch (error) {
-        console.error('Error saving to localStorage:', error);
-        alert('Unable to save favorites. Your browser may have storage disabled.');
-    }
-}
-
-// Function to load favorites from localStorage
-function loadFavorites() {
-    try {
-        const savedData = localStorage.getItem('localFavorites');
-
-        if (savedData) {
-            favorites = JSON.parse(savedData);
-            console.log('Favorites loaded from localStorage');
-            console.log('Loaded', favorites.length, 'favorites');
-        } else {
-            console.log('No saved favorites found');
-            favorites = [];
-        }
-    } catch (error) {
-        console.error('Error loading from localStorage:', error);
-        console.log('Starting with empty favorites array');
-        favorites = [];
-    }
-}
-
-
-
 // Function to display all favorites on the page
 function displayFavorites() {
     console.log('Displaying favorites...');
@@ -154,9 +119,6 @@ function deleteFavorite(index) {
 
         // Re-apply current search/filter
         searchFavorites();
-
-        saveFavorites();
-
     } else {
         console.log('Deletion cancelled by user');
     }
@@ -200,16 +162,11 @@ function addFavorite(event) {
     favorites.push(newFavorite);
     console.log('Total favorites:', favorites.length);
 
-    // Save to localStorage
-    saveFavorites();
-
     // Clear the form
     form.reset();
 
     // Display updated list (resets filters)
     displayFavorites();
-
-    saveFavorites();
 
     console.log('Favorite added successfully!');
 }
@@ -221,8 +178,5 @@ categoryFilter.addEventListener('change', searchFavorites);
 
 console.log('Event listeners attached - app is ready!');
 
-// Load saved favorites from localStorage on startup
-loadFavorites();
-
-// Display the loaded favorites (or empty message)
+// Display empty message when page first loads
 displayFavorites();
